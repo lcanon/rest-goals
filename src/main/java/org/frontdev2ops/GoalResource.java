@@ -11,6 +11,6 @@ public class GoalResource {
   @GET
   @Produces(MediaType.TEXT_PLAIN)
   public String hello() {
-    return "Hello I'm working!!!";
+    return "Hi, I'm working!!!";
   }
 }
