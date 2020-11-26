@@ -38,17 +38,6 @@ class GoalResourceTest {
         .statusCode(OK.getStatusCode());
   }
 
-  @Test
-  @Order(1)
-  void shouldGetInitialItems() {
-    List<Goal> goals = get("/goals").then()
-        .statusCode(OK.getStatusCode())
-        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-        .extract().body().as(getGoalTypeRef());
-    assertEquals(0, goals.size());
-  }
-
-
   private TypeRef<List<Goal>> getGoalTypeRef() {
     return new TypeRef<List<Goal>>() {
       // Kept empty on purpose
