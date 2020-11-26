@@ -53,11 +53,11 @@ public class GoalServiceImpl implements GoalService {
   public Optional<Goal> addTip(Long goalId, Double tipAmount) {
     Optional<Goal> entity = Goal.findByIdOptional(goalId);
     entity.ifPresent(goal -> {
-      if(goal.actual-tipAmount>=0) {
-        goal.actual -= tipAmount;
+      if(goal.actual+tipAmount <= goal.total) {
+        goal.actual += tipAmount;
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
         numberFormat.setMinimumFractionDigits(3);
-        goal.completed = (int) Math.floor((1 - (goal.actual / goal.total)) * 100);
+        goal.completed = (int) Math.floor((goal.actual / goal.total) * 100);
       }
     });
     return entity;

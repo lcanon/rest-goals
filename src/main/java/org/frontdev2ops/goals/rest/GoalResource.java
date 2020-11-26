@@ -49,9 +49,6 @@ public class GoalResource {
       @Parameter(description = "User id", required = true) @PathParam("user-id") Long userId) {
     List<Goal> goals = goalService.findAllOfUser(userId);
     log.info("Get all Goals of user {}: {}", userId, goals);
-
-
-    //urlImageService.findRandomPhoto("iphone");
     return Response.ok(goals).build();
   }
 
@@ -63,7 +60,8 @@ public class GoalResource {
       @RequestBody(required = true, content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Goal.class)))
       @Valid Goal goal, @Context UriInfo uriInfo) {
     goal.userId = userId;
-    goal.actual = goal.total;
+    goal.actual = 0.0;
+    goal.urlImage = urlImageService.findRandomPhoto(goal.name);
     goal = goalService.save(goal);
 
     UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(Long.toString(goal.id));
